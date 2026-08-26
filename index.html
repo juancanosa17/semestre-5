@@ -113,7 +113,6 @@ button.go:disabled{opacity:.55;cursor:progress}
   <div class="top">
     <span class="nm" id="docName">—</span>
     <span class="sp"></span>
-    <span id="idle"></span>
     <button id="lock" type="button">🔒 Bloquear</button>
   </div>
   <iframe id="frame" title="Documento"></iframe>
@@ -188,7 +187,6 @@ async function desbloquear(){
   busy(false); say('');
   gate.classList.add('off');
   app.classList.add('on');
-  armarIdle();
   await mostrar(MANIFEST.docs[0].id);
 }
 
@@ -225,29 +223,15 @@ frame.addEventListener('load', () => {
     const destino = MANIFEST.docs.find(x => x.href === decodeURIComponent(h));
     if(destino){ e.preventDefault(); mostrar(destino.id); }
   }, true);
-  d.addEventListener('keydown', reIdle, true);
-  d.addEventListener('mousemove', reIdle, {capture:true, passive:true});
 });
 
 /* ---------- bloqueo ---------- */
+/* Sólo manual, con el botón 🔒. No hay bloqueo por inactividad: la sesión
+   dura hasta que se cierra o recarga la pestaña. */
 function bloquear(){
   KEY = null; CACHE.clear();
   /* recargar destruye el contexto: no queda rastro de la clave en memoria */
   location.reload();
-}
-
-const LIMITE = 20 * 60 * 1000;     /* 20 minutos de inactividad */
-let idleT = null, vence = 0;
-function armarIdle(){ reIdle(); setInterval(pintarIdle, 30000); }
-function reIdle(){
-  vence = Date.now() + LIMITE;
-  clearTimeout(idleT);
-  idleT = setTimeout(bloquear, LIMITE);
-  pintarIdle();
-}
-function pintarIdle(){
-  const m = Math.max(0, Math.round((vence - Date.now()) / 60000));
-  $('#idle').textContent = 'se bloquea en ' + m + ' min';
 }
 
 /* ---------- eventos ---------- */
@@ -258,8 +242,6 @@ $('#eye').addEventListener('click', () => {
   pw.focus();
 });
 $('#lock').addEventListener('click', bloquear);
-['click','keydown','mousemove'].forEach(ev =>
-  document.addEventListener(ev, () => { if(KEY) reIdle(); }, {passive:true}));
 
 if(!crypto || !crypto.subtle){
   say('Este navegador no expone Web Crypto. Hace falta HTTPS y un navegador moderno.', 'err');
