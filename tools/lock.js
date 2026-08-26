@@ -3,6 +3,7 @@
  * lock.js — cifra los documentos locales y los deja listos para publicar.
  *
  *   node tools/lock.js              pide la contraseña por teclado (sin eco)
+ *   node tools/lock.js --stdin      lee la contraseña de la entrada estándar
  *   node tools/lock.js --generate   genera una contraseña aleatoria fuerte
  *                                   y la escribe en un archivo FUERA del repo
  *
@@ -75,6 +76,18 @@ function generar() {
   return [pick(), pick(), pick(), pick(), pick()].join('-') + '-' + crypto.randomInt(10, 100);
 }
 
+function leerStdin() {
+  return new Promise((resolve) => {
+    let buf = '';
+    process.stdin.setEncoding('utf8');
+    process.stdin.on('data', (c) => { buf += c; });
+    process.stdin.on('end', () => {
+      while (buf.endsWith(CR) || buf.endsWith(LF)) buf = buf.slice(0, -1);
+      resolve(buf);
+    });
+  });
+}
+
 /* ── principal ──────────────────────────────────────────────── */
 
 (async function main() {
@@ -96,6 +109,9 @@ function generar() {
 
   if (generado) {
     pass = generar();
+  } else if (process.argv.includes('--stdin')) {
+    pass = await leerStdin();
+    if (!pass) { console.error('No llego ninguna contrasena por la entrada estandar.'); process.exit(1); }
   } else {
     pass = await preguntar('Contraseña (no se muestra al escribir): ');
     if (pass.length < 10) {

@@ -1,56 +1,98 @@
 # semestre-5
 
-Material de estudio propio, publicado **cifrado**.
+Material de estudio del **quinto semestre de Ingeniería en Sistemas** —
+Universidad ORT Uruguay, grupo N5A nocturno, agosto 2026.
 
-Este repositorio no contiene ningún documento legible: sólo blobs cifrados con
-**AES-256-GCM** y la página que los descifra en el navegador. Sin la contraseña
-no hay nada que leer, ni siquiera clonando el repositorio.
+Son tres páginas HTML autocontenidas: un panel con el calendario del semestre y
+dos resúmenes completos para preparar los parciales. No usan librerías externas
+ni conexión a internet — todo el contenido, los gráficos y las herramientas
+interactivas viven dentro de cada archivo.
 
-## Cómo funciona
+**→ [juancanosa17.github.io/semestre-5](https://juancanosa17.github.io/semestre-5/)**
+
+---
+
+## Los documentos
+
+### Semestre 5 · el panel
+
+El punto de entrada. Reúne todo lo administrativo del semestre en un solo lugar:
+
+- **Calendario mensual** con las 130 clases del período, marcables como vistas,
+  con feriados, parciales, defensas y entregas superpuestos. Recuerda el
+  progreso entre sesiones.
+- **Horario semanal** de las cuatro materias, con módulo y modalidad de cada
+  bloque (HYFLEX, laboratorio, presencial).
+- **Calendario de eventos** filtrable: lecturas y entregas de obligatorios,
+  parciales, segundas instancias, clases de consulta y feriados.
+- **Estructura de evaluación** de cada materia, con simulador de puntaje para
+  calcular cuánto necesitás en el parcial según lo que ya tengas, y un bloc de
+  notas por materia.
+
+Las cuatro materias del semestre son Diseño de Aplicaciones 1 (3924), Bases de
+Datos 2 (3839), Redes (3838) y Teoría de la Computación (6452). Las dos últimas
+tienen resumen propio y se abren desde la barra de navegación.
+
+### Resumen · Redes (3838)
+
+Nueve capítulos sobre *Computer Networking: A Top-Down Approach* (Kurose &
+Ross, 9.ª ed.), siguiendo el recorrido del curso desde la capa de aplicación
+hacia abajo: qué es internet y el modelo de cinco capas, HTTP/1.1–2–3, DNS,
+correo, sockets, UDP y TCP, control de flujo y de congestión, ruteo, la capa de
+red y la de enlace.
+
+Incluye **19 herramientas interactivas** —entre ellas un simulador de
+resolución DNS, uno de ventana deslizante, una línea de tiempo de TCP,
+calculadoras de CRC, checksum y subredes, y un mapa navegable de internet— más
+**122 preguntas de autoevaluación**.
+
+Sobre **52 parciales** de años anteriores se armó un análisis de frecuencia por
+tema y se intercalaron **67 preguntas reales** después de la sección que las
+responde.
+
+### Resumen · Teoría de la Computación (6452)
+
+Diez capítulos que cubren el programa completo: recursión y semántica
+operacional, teoría de conjuntos y numerabilidad, el lenguaje **χ**, el
+**cálculo lambda puro**, **Imp** y las **máquinas de Turing**, computabilidad
+—problema de la detención, reducciones, teorema de Rice— y complejidad P/NP.
+
+Sus **8 herramientas interactivas** incluyen un β-reductor real del cálculo
+lambda (con sustitución que evita captura de variables y las dos estrategias de
+evaluación), un simulador de máquinas de Turing programable, árboles de
+derivación de χ paso a paso, el emparejamiento de Cantor y un clasificador de
+decidibilidad. Suma **96 preguntas de autoevaluación**.
+
+El primer capítulo es una radiografía de **15 parciales** de 2019 a 2026: qué
+tema aparece en cada uno, los cinco ejercicios que se repiten y un plan de
+estudio derivado de eso. A lo largo del texto hay **17 bloques con preguntas
+reales** y su resolución.
+
+Está armado sobre las notas de cátedra de **Diego Acuña**, los repartidos de
+**Á. Tasistro** y **E. Copello**, y el repositorio `TC_Marzo26` de la edición
+del curso.
+
+---
+
+## Estructura del repositorio
 
 ```
-index.html          la página de acceso y el visor
-data/manifest.json  parámetros de derivación (salt, iteraciones) + índice
-data/d*.bin         los documentos cifrados: 12 bytes de IV + ciphertext + tag
-tools/lock.js       cifra los HTML locales y regenera data/
-tools/sources.json  qué archivos cifrar (rutas de la máquina local)
+index.html          la página del sitio
+data/               los documentos publicados
+tools/lock.js       regenera data/ a partir de los HTML locales
+tools/sources.json  dónde están los originales en la máquina local
 ```
 
-- La clave se deriva con **PBKDF2-HMAC-SHA256, 310 000 iteraciones** sobre un
-  salt aleatorio de 16 bytes.
-- Cada documento se cifra con su propio IV de 12 bytes; GCM aporta la
-  autenticación, así que una contraseña incorrecta falla al descifrar en lugar
-  de devolver basura.
-- La clave derivada se importa con `extractable: false`: vive en memoria y ni
-  siquiera el JavaScript de la página puede volver a leer sus bytes.
-- La contraseña **no se guarda** en `localStorage`, `sessionStorage`, cookies ni
-  en el gestor de contraseñas del navegador, y **no viaja a ningún servidor**:
-  todo el descifrado ocurre en el cliente. El campo se vacía apenas se usa.
-- La sesión se bloquea sola a los **20 minutos de inactividad** y con el botón
-  🔒 Bloquear. Bloquear recarga la página, con lo que el contexto que contenía
-  la clave se destruye.
-- Una `Content-Security-Policy` restrictiva impide que la página abra conexiones
-  a cualquier host que no sea el propio sitio, así que el contenido descifrado
-  no puede filtrarse hacia afuera.
+Los HTML originales no viven acá: se editan por fuera y este repositorio
+publica el resultado.
 
-## Actualizar el contenido
+## Publicar cambios
 
-Los HTML en claro nunca entran acá. Editás los originales donde estén, y después:
+Después de editar los originales:
 
 ```bash
 node tools/lock.js
 git add data && git commit -m "Actualiza el contenido" && git push
 ```
 
-`tools/lock.js` pide la contraseña sin mostrarla en pantalla. Para cambiarla,
-basta con volver a correrlo con una nueva: se genera un salt nuevo y se
-recifra todo.
-
-## Alcance de esta protección
-
-En un hosting estático no existe un login real: no hay servidor que valide
-credenciales. Por eso acá no se "esconde" el contenido detrás de una pantalla,
-sino que se lo **cifra**. Lo que un tercero puede obtener bajando este repositorio
-es el ciphertext, y contra él sólo cabe un ataque de fuerza bruta *offline* —
-razón por la cual la contraseña tiene que ser larga. Las 310 000 iteraciones de
-PBKDF2 encarecen cada intento.
+GitHub Pages levanta la versión nueva en un par de minutos.
