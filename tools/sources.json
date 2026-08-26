@@ -1,0 +1,20 @@
+[
+  {
+    "id": "dashboard",
+    "title": "Semestre 5",
+    "href": "Semestre 5.html",
+    "path": "C:/Users/juani/OneDrive/Escritorio/Semestre 5.html"
+  },
+  {
+    "id": "redes",
+    "title": "Resumen · Redes",
+    "href": "Resumen Redes.html",
+    "path": "C:/Users/juani/OneDrive/Escritorio/Resumen Redes.html"
+  },
+  {
+    "id": "tc",
+    "title": "Resumen · Teoría de la Computación",
+    "href": "Resumen Teoria de la Computacion.html",
+    "path": "C:/Users/juani/OneDrive/Escritorio/Resumen Teoria de la Computacion.html"
+  }
+]

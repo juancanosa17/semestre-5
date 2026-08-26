@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self' 'unsafe-inline' data: blob:; connect-src 'self'; frame-ancestors 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<title>Acceso restringido</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>🔒</text></svg>">
+<style>
+:root{
+  --bg:#0b0f16; --card:#111826; --line:#1f2937; --txt:#e6edf7; --txt2:#9fb0c8;
+  --muted:#6b7d96; --ac:#5b93f0; --ac2:#8fb8ff; --bad:#f87171; --ok:#4ade80;
+  --sans:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --mono:'Cascadia Mono','Consolas',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+
+/* ---------- pantalla de acceso ---------- */
+#gate{
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;
+  background:radial-gradient(1100px 620px at 50% -10%,rgba(91,147,240,.13),transparent 62%),var(--bg);
+  z-index:50;
+}
+#gate.off{display:none}
+.card{
+  width:100%;max-width:404px;background:var(--card);border:1px solid var(--line);
+  border-radius:16px;padding:30px 28px 24px;box-shadow:0 24px 70px rgba(0,0,0,.55);
+}
+.lock{
+  width:46px;height:46px;border-radius:13px;display:grid;place-items:center;margin-bottom:18px;
+  background:rgba(91,147,240,.13);border:1px solid rgba(91,147,240,.28);font-size:21px;
+}
+h1{margin:0 0 6px;font-size:19.5px;font-weight:700;letter-spacing:-.35px}
+.sub{margin:0 0 22px;font-size:13px;color:var(--txt2);line-height:1.55}
+label{display:block;font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.pwrow{position:relative}
+input[type=password],input[type=text]{
+  width:100%;background:#0a0e15;border:1px solid var(--line);border-radius:10px;
+  padding:12px 44px 12px 14px;color:var(--txt);font-family:var(--mono);font-size:14.5px;letter-spacing:.5px;
+  outline:none;transition:border-color .15s,box-shadow .15s;
+}
+input:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(91,147,240,.16)}
+.eye{
+  position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:0;
+  color:var(--muted);cursor:pointer;padding:7px 9px;border-radius:7px;font-size:14px;line-height:1;
+}
+.eye:hover{color:var(--txt2);background:rgba(255,255,255,.05)}
+button.go{
+  width:100%;margin-top:14px;padding:12px;border:0;border-radius:10px;cursor:pointer;
+  background:var(--ac);color:#04101f;font-family:var(--sans);font-size:14px;font-weight:750;letter-spacing:-.1px;
+  transition:filter .15s,opacity .15s;
+}
+button.go:hover:not(:disabled){filter:brightness(1.09)}
+button.go:disabled{opacity:.55;cursor:progress}
+.msg{margin-top:13px;font-size:12.6px;min-height:18px;line-height:1.5}
+.msg.err{color:var(--bad)} .msg.info{color:var(--muted)}
+.note{
+  margin-top:20px;padding-top:16px;border-top:1px solid var(--line);
+  font-size:11.4px;color:var(--muted);line-height:1.65;
+}
+.note b{color:var(--txt2);font-weight:650}
+.bar{height:3px;border-radius:2px;background:var(--line);overflow:hidden;margin-top:14px;display:none}
+.bar.on{display:block}
+.bar i{display:block;height:100%;width:35%;background:var(--ac);animation:sl 1.05s ease-in-out infinite}
+@keyframes sl{0%{transform:translateX(-100%)}100%{transform:translateX(330%)}}
+
+/* ---------- visor ---------- */
+#app{display:none;flex-direction:column;height:100%}
+#app.on{display:flex}
+.top{
+  display:flex;align-items:center;gap:12px;padding:0 14px;height:34px;flex:0 0 34px;
+  background:#080c12;border-bottom:1px solid var(--line);font-size:11.6px;color:var(--muted);
+}
+.top .nm{font-weight:700;color:var(--txt2);letter-spacing:-.1px}
+.top .sp{flex:1}
+.top button{
+  background:none;border:1px solid var(--line);color:var(--txt2);border-radius:7px;
+  padding:3px 10px;font-size:11.2px;font-family:var(--sans);cursor:pointer;transition:.15s;
+}
+.top button:hover{border-color:var(--ac);color:var(--ac2)}
+#frame{flex:1;width:100%;border:0;background:var(--bg)}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="card">
+    <div class="lock">🔒</div>
+    <h1>Contenido cifrado</h1>
+    <p class="sub">Este sitio guarda sus documentos cifrados con AES&#8209;256&#8209;GCM. Ingresá la contraseña para descifrarlos en tu navegador.</p>
+
+    <label for="pw">Contraseña</label>
+    <div class="pwrow">
+      <input id="pw" type="password" autocomplete="off" autocapitalize="off" autocorrect="off"
+             spellcheck="false" data-lpignore="true" data-form-type="other" data-1p-ignore>
+      <button class="eye" id="eye" type="button" title="Mostrar u ocultar" aria-label="Mostrar u ocultar la contraseña">👁</button>
+    </div>
+    <button class="go" id="go" type="button">Descifrar</button>
+    <div class="bar" id="bar"><i></i></div>
+    <div class="msg info" id="msg"></div>
+
+    <div class="note">
+      La contraseña <b>no viaja a ningún servidor</b> y <b>no se guarda</b> en el navegador: sólo deriva una clave que vive en memoria hasta que cerrás o bloqueás la pestaña. No hay recuperación posible — si la perdés, el contenido no se puede leer.
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="top">
+    <span class="nm" id="docName">—</span>
+    <span class="sp"></span>
+    <span id="idle"></span>
+    <button id="lock" type="button">🔒 Bloquear</button>
+  </div>
+  <iframe id="frame" title="Documento"></iframe>
+</div>
+
+<script>
+'use strict';
+(function(){
+
+const $ = s => document.querySelector(s);
+const gate=$('#gate'), app=$('#app'), pw=$('#pw'), go=$('#go'), msg=$('#msg'), bar=$('#bar'), frame=$('#frame');
+
+/* La clave derivada vive SOLO acá, en memoria, y es no-extraíble:
+   ni siquiera este script puede volver a leer sus bytes. */
+let KEY = null;
+let MANIFEST = null;
+const CACHE = new Map();      /* id -> html descifrado */
+let actual = null;
+
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const dec = new TextDecoder();
+
+function say(t, cls){ msg.textContent = t; msg.className = 'msg ' + (cls||'info'); }
+function busy(on){ bar.classList.toggle('on', on); go.disabled = on; }
+
+/* ---------- derivación de clave ---------- */
+async function derivar(pass, kdf){
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey(
+    { name:'PBKDF2', salt:b64(kdf.salt), iterations:kdf.iter, hash:kdf.hash },
+    base,
+    { name:'AES-GCM', length:256 },
+    false,                       /* extractable:false */
+    ['decrypt']
+  );
+}
+
+async function abrirBlob(buf){
+  const u8 = new Uint8Array(buf);
+  const iv = u8.slice(0, 12), ct = u8.slice(12);
+  return dec.decode(await crypto.subtle.decrypt({name:'AES-GCM', iv}, KEY, ct));
+}
+
+/* ---------- desbloqueo ---------- */
+async function desbloquear(){
+  const pass = pw.value;
+  if(!pass){ say('Escribí la contraseña.', 'err'); pw.focus(); return; }
+  busy(true); say('Derivando la clave…');
+
+  try{
+    if(!MANIFEST){
+      const r = await fetch('data/manifest.json', {cache:'no-store'});
+      if(!r.ok) throw new Error('No se pudo leer el manifiesto del sitio.');
+      MANIFEST = await r.json();
+    }
+    KEY = await derivar(pass, MANIFEST.kdf);
+
+    /* el verificador es un blob mínimo: valida la contraseña sin bajar los documentos */
+    await abrirBlob(b64(MANIFEST.verifier).buffer);
+  }catch(e){
+    KEY = null;
+    busy(false);
+    say(e && e.message && !/operation-specific|decrypt/i.test(e.message)
+        ? e.message
+        : 'Contraseña incorrecta.', 'err');
+    pw.select();
+    return;
+  }
+
+  /* la contraseña en claro se descarta de inmediato */
+  pw.value = '';
+  busy(false); say('');
+  gate.classList.add('off');
+  app.classList.add('on');
+  armarIdle();
+  await mostrar(MANIFEST.docs[0].id);
+}
+
+/* ---------- visor ---------- */
+async function cargar(id){
+  if(CACHE.has(id)) return CACHE.get(id);
+  const d = MANIFEST.docs.find(x => x.id === id);
+  const r = await fetch('data/' + d.file, {cache:'no-store'});
+  const html = await abrirBlob(await r.arrayBuffer());
+  CACHE.set(id, html);
+  return html;
+}
+
+async function mostrar(id){
+  const d = MANIFEST.docs.find(x => x.id === id);
+  if(!d) return;
+  actual = id;
+  $('#docName').textContent = d.title;
+  document.title = d.title;
+  frame.srcdoc = await cargar(id);
+}
+
+/* Los documentos se enlazan entre sí por nombre de archivo. Como acá viven
+   dentro del iframe, se interceptan esos clics y se resuelven contra el manifiesto. */
+frame.addEventListener('load', () => {
+  let d;
+  try { d = frame.contentDocument; } catch(e){ return; }
+  if(!d) return;
+  d.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href]');
+    if(!a) return;
+    const h = a.getAttribute('href') || '';
+    if(!h || h.charAt(0) === '#') return;
+    const destino = MANIFEST.docs.find(x => x.href === decodeURIComponent(h));
+    if(destino){ e.preventDefault(); mostrar(destino.id); }
+  }, true);
+  d.addEventListener('keydown', reIdle, true);
+  d.addEventListener('mousemove', reIdle, {capture:true, passive:true});
+});
+
+/* ---------- bloqueo ---------- */
+function bloquear(){
+  KEY = null; CACHE.clear();
+  /* recargar destruye el contexto: no queda rastro de la clave en memoria */
+  location.reload();
+}
+
+const LIMITE = 20 * 60 * 1000;     /* 20 minutos de inactividad */
+let idleT = null, vence = 0;
+function armarIdle(){ reIdle(); setInterval(pintarIdle, 30000); }
+function reIdle(){
+  vence = Date.now() + LIMITE;
+  clearTimeout(idleT);
+  idleT = setTimeout(bloquear, LIMITE);
+  pintarIdle();
+}
+function pintarIdle(){
+  const m = Math.max(0, Math.round((vence - Date.now()) / 60000));
+  $('#idle').textContent = 'se bloquea en ' + m + ' min';
+}
+
+/* ---------- eventos ---------- */
+go.addEventListener('click', desbloquear);
+pw.addEventListener('keydown', e => { if(e.key === 'Enter') desbloquear(); });
+$('#eye').addEventListener('click', () => {
+  pw.type = pw.type === 'password' ? 'text' : 'password';
+  pw.focus();
+});
+$('#lock').addEventListener('click', bloquear);
+['click','keydown','mousemove'].forEach(ev =>
+  document.addEventListener(ev, () => { if(KEY) reIdle(); }, {passive:true}));
+
+if(!crypto || !crypto.subtle){
+  say('Este navegador no expone Web Crypto. Hace falta HTTPS y un navegador moderno.', 'err');
+  go.disabled = true;
+} else {
+  pw.focus();
+}
+
+})();
+</script>
+</body>
+</html>

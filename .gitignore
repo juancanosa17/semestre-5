@@ -1,0 +1,17 @@
+# Nada en claro entra a este repositorio.
+# Los HTML fuente viven fuera del repo (ver tools/sources.json).
+*.html
+!index.html
+
+# Contraseñas y secretos
+CLAVE*
+clave*
+*.key
+.env
+.env.*
+
+# Ruido del sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+node_modules/
