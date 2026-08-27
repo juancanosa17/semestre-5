@@ -104,7 +104,7 @@ button.go:disabled{opacity:.55;cursor:progress}
     <div class="msg info" id="msg"></div>
 
     <div class="note">
-      La contraseña <b>no viaja a ningún servidor</b> y <b>no se guarda</b> en el navegador: sólo deriva una clave que vive en memoria hasta que cerrás o bloqueás la pestaña. No hay recuperación posible — si la perdés, el contenido no se puede leer.
+      La contraseña <b>no viaja a ningún servidor</b> y <b>no se guarda en ningún lado</b>: sólo deriva una clave que queda en este dispositivo —no se puede volver a leer, sólo usar para descifrar— hasta que toques <b>🔒 Bloquear</b>. No hay recuperación posible — si la perdés, el contenido no se puede leer.
     </div>
   </div>
 </div>
@@ -156,6 +156,62 @@ async function abrirBlob(buf){
   return dec.decode(await crypto.subtle.decrypt({name:'AES-GCM', iv}, KEY, ct));
 }
 
+/* ---------- sesión recordada ----------
+   La clave derivada (no-extraíble) se guarda en IndexedDB. Al recargar la
+   pestaña —o si el navegador la descarta por memoria, cosa habitual en el
+   celular con documentos de 400 KB— la sesión se reanuda sola en vez de
+   volver a pedir la contraseña. El objeto CryptoKey se clona sin exponer
+   sus bytes: ni este script ni nadie puede volver a leer la clave, sólo
+   usarla para descifrar. Se borra con el botón 🔒 Bloquear. */
+const DB = 'semestre-5', TIENDA = 'sesion', LLAVE = 'k';
+function idb(modo, fn){
+  return new Promise((res, rej) => {
+    let r;
+    try { r = indexedDB.open(DB, 1); } catch(e){ rej(e); return; }
+    r.onupgradeneeded = () => { r.result.createObjectStore(TIENDA); };
+    r.onerror = () => rej(r.error);
+    r.onsuccess = () => {
+      const db = r.result;
+      let pedido;
+      try {
+        const tx = db.transaction(TIENDA, modo);
+        pedido = fn(tx.objectStore(TIENDA));
+        tx.oncomplete = () => { db.close(); res(pedido && pedido.result); };
+        tx.onerror = () => { db.close(); rej(tx.error); };
+      } catch(e){ db.close(); rej(e); }
+    };
+  });
+}
+/* el salt queda junto a la clave: si se recifra el sitio con otra contraseña
+   el salt cambia y la sesión vieja se descarta sola */
+async function recordarSesion(salt){ try{ await idb('readwrite', s => s.put({key:KEY, salt}, LLAVE)); }catch(e){} }
+async function sesionGuardada(){ try{ return await idb('readonly', s => s.get(LLAVE)); }catch(e){ return null; } }
+async function olvidarSesion(){ try{ await idb('readwrite', s => s.delete(LLAVE)); }catch(e){} }
+
+async function reanudar(){
+  if(typeof indexedDB === 'undefined') return false;
+  const g = await sesionGuardada();
+  if(!g || !g.key) return false;
+  try{
+    if(!MANIFEST){
+      const r = await fetch('data/manifest.json', {cache:'no-store'});
+      if(!r.ok) return false;
+      MANIFEST = await r.json();
+    }
+    if(g.salt !== MANIFEST.kdf.salt) throw new Error('el sitio se recifró');
+    KEY = g.key;
+    await abrirBlob(b64(MANIFEST.verifier).buffer);   /* valida la clave guardada */
+  }catch(e){
+    KEY = null;
+    await olvidarSesion();
+    return false;
+  }
+  gate.classList.add('off');
+  app.classList.add('on');
+  await mostrar(MANIFEST.docs[0].id);
+  return true;
+}
+
 /* ---------- desbloqueo ---------- */
 async function desbloquear(){
   const pass = pw.value;
@@ -184,6 +240,7 @@ async function desbloquear(){
 
   /* la contraseña en claro se descarta de inmediato */
   pw.value = '';
+  await recordarSesion(MANIFEST.kdf.salt);
   busy(false); say('');
   gate.classList.add('off');
   app.classList.add('on');
@@ -219,17 +276,28 @@ frame.addEventListener('load', () => {
     const a = e.target.closest && e.target.closest('a[href]');
     if(!a) return;
     const h = a.getAttribute('href') || '';
-    if(!h || h.charAt(0) === '#') return;
-    const destino = MANIFEST.docs.find(x => x.href === decodeURIComponent(h));
-    if(destino){ e.preventDefault(); mostrar(destino.id); }
+    if(!h || h.charAt(0) === '#') return;                    /* ancla interna: que funcione sola */
+    if(/^[a-z][a-z0-9+.-]*:/i.test(h)) return;               /* http, mailto, etc.: que abra normal */
+
+    /* nombre de archivo, tolerando "./", %20 y un #ancla al final */
+    let nombre = h.split('#')[0].replace(/^\.\//, '');
+    try { nombre = decodeURIComponent(nombre); } catch(err){}
+    const destino = MANIFEST.docs.find(x => x.href === nombre);
+
+    /* los documentos en claro no existen en el servidor: si el enlace se
+       escapara del visor, la pestaña se iría a un 404 y habría que volver
+       a entrar. Se resuelve contra el manifiesto o no se navega. */
+    e.preventDefault();
+    if(destino) mostrar(destino.id);
   }, true);
 });
 
 /* ---------- bloqueo ---------- */
-/* Sólo manual, con el botón 🔒. No hay bloqueo por inactividad: la sesión
-   dura hasta que se cierra o recarga la pestaña. */
-function bloquear(){
+/* Sólo manual, con el botón 🔒. No hay bloqueo por inactividad ni por
+   recargar: la sesión dura hasta que se bloquea a mano. */
+async function bloquear(){
   KEY = null; CACHE.clear();
+  await olvidarSesion();
   /* recargar destruye el contexto: no queda rastro de la clave en memoria */
   location.reload();
 }
@@ -248,6 +316,9 @@ if(!crypto || !crypto.subtle){
   go.disabled = true;
 } else {
   pw.focus();
+  /* si quedó una sesión abierta, entrar sin preguntar nada */
+  say('Buscando una sesión abierta…');
+  reanudar().then(ok => { if(!ok){ say(''); pw.focus(); } });
 }
 
 })();
