@@ -83,6 +83,12 @@ evaluación), un simulador de máquinas de Turing programable, árboles de
 derivación de χ paso a paso, el emparejamiento de Cantor y un clasificador de
 decidibilidad. Suma **96 preguntas de autoevaluación**.
 
+Incluye además el **Práctico 0** completo — el lenguaje de expresiones de
+conjuntos finitos de enteros, con su sintaxis abstracta, las nueve reglas de
+semántica operacional, la implementación en Haskell y las extensiones de la
+parte 6 — con un evaluador que ejecuta esas reglas y muestra el árbol de
+derivación.
+
 El primer capítulo es una radiografía de **15 parciales** de 2019 a 2026: qué
 tema aparece en cada uno, los cinco ejercicios que se repiten y un plan de
 estudio derivado de eso. A lo largo del texto hay **17 bloques con preguntas
