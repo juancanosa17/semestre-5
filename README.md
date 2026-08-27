@@ -3,8 +3,8 @@
 Material de estudio del **quinto semestre de Ingeniería en Sistemas** —
 Universidad ORT Uruguay, grupo N5A nocturno, agosto 2026.
 
-Son tres páginas HTML autocontenidas: un panel con el calendario del semestre y
-dos resúmenes completos para preparar los parciales. No usan librerías externas
+Son cuatro páginas HTML autocontenidas: un panel con el calendario del semestre
+y tres resúmenes completos para preparar los parciales. No usan librerías externas
 ni conexión a internet — todo el contenido, los gráficos y las herramientas
 interactivas viven dentro de cada archivo.
 
@@ -30,7 +30,7 @@ El punto de entrada. Reúne todo lo administrativo del semestre en un solo lugar
   notas por materia.
 
 Las cuatro materias del semestre son Diseño de Aplicaciones 1 (3924), Bases de
-Datos 2 (3839), Redes (3838) y Teoría de la Computación (6452). Las dos últimas
+Datos 2 (3839), Redes (3838) y Teoría de la Computación (6452). Las tres últimas
 tienen resumen propio y se abren desde la barra de navegación.
 
 ### Resumen · Redes (3838)
@@ -49,6 +49,26 @@ calculadoras de CRC, checksum y subredes, y un mapa navegable de internet— má
 Sobre **52 parciales** de años anteriores se armó un análisis de frecuencia por
 tema y se intercalaron **67 preguntas reales** después de la sección que las
 responde.
+
+### Resumen · Bases de Datos 2 (3839)
+
+Doce capítulos sobre el material de la Cátedra de Bases de Datos. La materia
+tiene **dos parciales que son dos programas distintos**, y el resumen los separa:
+el primero cubre integridad, seguridad, optimización de consultas y la evolución
+de los DBMS hasta NoSQL; el segundo, transacciones, recuperabilidad, seriabilidad,
+candados y 2PL, granularidad múltiple y recuperación ante fallas.
+
+Su herramienta central es un **analizador de planes**: se le pega un plan
+entrelazado —vienen cargados los seis de los parciales del archivo— y resuelve
+los cuatro primeros ejercicios, con el grafo de precedencia dibujado, la
+clasificación por recuperabilidad y el veredicto de 2PL en sus seis variantes,
+señalando el conflicto exacto que impide cada una. Lo acompañan un simulador de
+recuperación con checkpoint y falla, uno de candados de intención sobre la
+jerarquía, y calculadoras de propagación de privilegios, Bell-LaPadula y costos
+de acceso.
+
+Incluye **17 bloques con preguntas reales** resueltas y **33 de autoevaluación**,
+sobre el análisis de **6 parciales** de 2024 y 2025.
 
 ### Resumen · Teoría de la Computación (6452)
 

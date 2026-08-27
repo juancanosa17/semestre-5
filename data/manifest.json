@@ -4,9 +4,9 @@
     "name": "PBKDF2",
     "hash": "SHA-256",
     "iter": 310000,
-    "salt": "J5ZQvRqvqRMJb9G1g2NRkg=="
+    "salt": "B45978iAIJFY/D9toeW1bg=="
   },
-  "verifier": "EdKRmE2b03I/82coN+1Ie/yLSbMOIPCZLH/DwM3+uD23X+HVM/4=",
+  "verifier": "KbijfrZk5o5LdwfW3vOvUcGtpLFS7CcUzOZ29GyHzHpSiPdOoPo=",
   "docs": [
     {
       "id": "dashboard",
@@ -25,6 +25,12 @@
       "title": "Resumen · Teoría de la Computación",
       "href": "Resumen Teoria de la Computacion.html",
       "file": "d2.bin"
+    },
+    {
+      "id": "bd2",
+      "title": "Resumen · Bases de Datos 2",
+      "href": "Resumen Bases de Datos 2.html",
+      "file": "d3.bin"
     }
   ]
 }
