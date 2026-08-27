@@ -76,12 +76,6 @@ button.go:disabled{opacity:.55;cursor:progress}
   background:#080c12;border-bottom:1px solid var(--line);font-size:11.6px;color:var(--muted);
 }
 .top .nm{font-weight:700;color:var(--txt2);letter-spacing:-.1px}
-.top .sp{flex:1}
-.top button{
-  background:none;border:1px solid var(--line);color:var(--txt2);border-radius:7px;
-  padding:3px 10px;font-size:11.2px;font-family:var(--sans);cursor:pointer;transition:.15s;
-}
-.top button:hover{border-color:var(--ac);color:var(--ac2)}
 #frame{flex:1;width:100%;border:0;background:var(--bg)}
 </style>
 </head>
@@ -104,17 +98,13 @@ button.go:disabled{opacity:.55;cursor:progress}
     <div class="msg info" id="msg"></div>
 
     <div class="note">
-      La contraseña <b>no viaja a ningún servidor</b> y <b>no se guarda en ningún lado</b>: sólo deriva una clave que queda en este dispositivo —no se puede volver a leer, sólo usar para descifrar— hasta que toques <b>🔒 Bloquear</b>. No hay recuperación posible — si la perdés, el contenido no se puede leer.
+      La contraseña <b>no viaja a ningún servidor</b> y <b>no se guarda en ningún lado</b>: sólo deriva una clave que queda en este dispositivo —no se puede volver a leer, sólo usar para descifrar— mientras uses este dispositivo. No hay recuperación posible — si la perdés, el contenido no se puede leer.
     </div>
   </div>
 </div>
 
 <div id="app">
-  <div class="top">
-    <span class="nm" id="docName">—</span>
-    <span class="sp"></span>
-    <button id="lock" type="button">🔒 Bloquear</button>
-  </div>
+  <div class="top"><span class="nm" id="docName">—</span></div>
   <iframe id="frame" title="Documento"></iframe>
 </div>
 
@@ -162,7 +152,7 @@ async function abrirBlob(buf){
    celular con documentos de 400 KB— la sesión se reanuda sola en vez de
    volver a pedir la contraseña. El objeto CryptoKey se clona sin exponer
    sus bytes: ni este script ni nadie puede volver a leer la clave, sólo
-   usarla para descifrar. Se borra con el botón 🔒 Bloquear. */
+   usarla para descifrar. Se descarta sola si el sitio se recifra. */
 const DB = 'semestre-5', TIENDA = 'sesion', LLAVE = 'k';
 function idb(modo, fn){
   return new Promise((res, rej) => {
@@ -268,6 +258,17 @@ async function mostrar(id){
 
 /* Los documentos se enlazan entre sí por nombre de archivo. Como acá viven
    dentro del iframe, se interceptan esos clics y se resuelven contra el manifiesto. */
+/* Recorre un ancla dentro del documento del visor. Se delega en el goTo del
+   propio documento cuando existe, para conservar el resaltado del destino. */
+function irAlAncla(d, id){
+  try { id = decodeURIComponent(id); } catch(e){}
+  if(!id) return;
+  const w = d.defaultView;
+  if(w && typeof w.goTo === 'function'){ w.goTo(id); return; }
+  const destino = d.getElementById(id);
+  if(destino) destino.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
 frame.addEventListener('load', () => {
   let d;
   try { d = frame.contentDocument; } catch(e){ return; }
@@ -276,7 +277,18 @@ frame.addEventListener('load', () => {
     const a = e.target.closest && e.target.closest('a[href]');
     if(!a) return;
     const h = a.getAttribute('href') || '';
-    if(!h || h.charAt(0) === '#') return;                    /* ancla interna: que funcione sola */
+    if(!h) return;
+
+    /* Un documento cargado por srcdoc vive en "about:srcdoc" pero conserva
+       como base la URL de esta pagina, asi que el navegador resolveria un
+       href="#s1-2" contra el sitio y cargaria index.html dentro del iframe:
+       al tocar un tema del indice lateral se perdia el documento. Por eso
+       las anclas se recorren a mano. */
+    if(h.charAt(0) === '#'){
+      e.preventDefault();
+      irAlAncla(d, h.slice(1));
+      return;
+    }
     if(/^[a-z][a-z0-9+.-]*:/i.test(h)) return;               /* http, mailto, etc.: que abra normal */
 
     /* nombre de archivo, tolerando "./", %20 y un #ancla al final */
@@ -292,16 +304,6 @@ frame.addEventListener('load', () => {
   }, true);
 });
 
-/* ---------- bloqueo ---------- */
-/* Sólo manual, con el botón 🔒. No hay bloqueo por inactividad ni por
-   recargar: la sesión dura hasta que se bloquea a mano. */
-async function bloquear(){
-  KEY = null; CACHE.clear();
-  await olvidarSesion();
-  /* recargar destruye el contexto: no queda rastro de la clave en memoria */
-  location.reload();
-}
-
 /* ---------- eventos ---------- */
 go.addEventListener('click', desbloquear);
 pw.addEventListener('keydown', e => { if(e.key === 'Enter') desbloquear(); });
@@ -309,7 +311,6 @@ $('#eye').addEventListener('click', () => {
   pw.type = pw.type === 'password' ? 'text' : 'password';
   pw.focus();
 });
-$('#lock').addEventListener('click', bloquear);
 
 if(!crypto || !crypto.subtle){
   say('Este navegador no expone Web Crypto. Hace falta HTTPS y un navegador moderno.', 'err');
