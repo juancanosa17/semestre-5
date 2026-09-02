@@ -4,9 +4,9 @@
     "name": "PBKDF2",
     "hash": "SHA-256",
     "iter": 310000,
-    "salt": "IXfWfea8MtlUIR99vPG3og=="
+    "salt": "oqjStrIzsxjo7BLZ7laI6g=="
   },
-  "verifier": "EEI6bORF13L1gY39QncHto+QmnZRlHdlMrPEYXdSSpybLisGxnI=",
+  "verifier": "BzRek2OcLKXHlEooieENpniM9OBs2AY/1wtooNOEA/S5FI1YSj0=",
   "docs": [
     {
       "id": "dashboard",
@@ -31,6 +31,12 @@
       "title": "Resumen · Bases de Datos 2",
       "href": "Resumen Bases de Datos 2.html",
       "file": "d3.bin"
+    },
+    {
+      "id": "da1",
+      "title": "Resumen · Diseño de Aplicaciones 1",
+      "href": "Resumen Diseno de Aplicaciones 1.html",
+      "file": "d4.bin"
     }
   ]
 }

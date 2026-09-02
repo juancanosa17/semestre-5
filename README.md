@@ -3,8 +3,8 @@
 Material de estudio del **quinto semestre de Ingeniería en Sistemas** —
 Universidad ORT Uruguay, grupo N5A nocturno, agosto 2026.
 
-Son cuatro páginas HTML autocontenidas: un panel con el calendario del semestre
-y tres resúmenes completos para preparar los parciales. No usan librerías externas
+Son cinco páginas HTML autocontenidas: un panel con el calendario del semestre
+y cuatro resúmenes completos para preparar los parciales. No usan librerías externas
 ni conexión a internet — todo el contenido, los gráficos y las herramientas
 interactivas viven dentro de cada archivo.
 
@@ -30,8 +30,28 @@ El punto de entrada. Reúne todo lo administrativo del semestre en un solo lugar
   notas por materia.
 
 Las cuatro materias del semestre son Diseño de Aplicaciones 1 (3924), Bases de
-Datos 2 (3839), Redes (3838) y Teoría de la Computación (6452). Las tres últimas
+Datos 2 (3839), Redes (3838) y Teoría de la Computación (6452). Las cuatro
 tienen resumen propio y se abren desde la barra de navegación.
+
+### Resumen · Diseño de Aplicaciones 1 (3924)
+
+Once capítulos que siguen el temario de la cátedra: paradigma de objetos y UML,
+herencia y polimorfismo, Clean Code, TDD, refactoring, GRASP, **SOLID**,
+**patrones de diseño** y los diagramas de paquetes e interacción.
+
+El capítulo de POO y UML está armado sobre el teórico publicado; el resto, sobre
+el temario oficial —que fija tema por tema qué entra y de qué capítulo de qué
+libro— y sobre las preguntas que efectivamente cayeron. El capítulo 0 marca cuál
+es cuál, porque el resumen se completa a medida que la cátedra publica material.
+
+Sus tres herramientas son clasificadores del ejercicio que más se repite:
+**qué relación UML** corresponde a un fragmento de código, **qué principio SOLID**
+viola un caso dado y **qué patrón** aplicar ante un problema concreto. Suma
+**8 preguntas reales resueltas** y **32 de autoevaluación**.
+
+Sobre **14 parciales** de 2021 a 2024 se armó el análisis de frecuencia: SOLID
+aparece en 13, patrones en 12 y UML de clases en 11. El parcial es de dos horas
+y **sin material**.
 
 ### Resumen · Redes (3838)
 
