@@ -72,10 +72,34 @@ button.go:disabled{opacity:.55;cursor:progress}
 #app{display:none;flex-direction:column;height:100%}
 #app.on{display:flex}
 .top{
-  display:flex;align-items:center;gap:12px;padding:0 14px;height:34px;flex:0 0 34px;
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto) minmax(0,1fr);align-items:center;gap:12px;
+  padding:0 14px;height:34px;flex:0 0 34px;
   background:#080c12;border-bottom:1px solid var(--line);font-size:11.6px;color:var(--muted);
 }
-.top .nm{font-weight:700;color:var(--txt2);letter-spacing:-.1px}
+/* sin justify-self: estirado a su columna, el nombre se recorta con puntos
+   suspensivos en vez de crecer por debajo de la cuenta regresiva */
+.top .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;
+  font-weight:700;color:var(--txt2);letter-spacing:-.1px}
+
+/* ---------- cuenta regresiva al próximo evento, en el centro de la barra ---------- */
+.cuenta{
+  justify-self:center;display:inline-flex;align-items:center;gap:8px;max-width:100%;min-width:0;
+  height:24px;padding:0 12px;border-radius:99px;border:1px solid var(--line);
+  background:rgba(255,255,255,.04);color:var(--txt2);font-family:var(--sans);font-size:11.6px;
+  cursor:pointer;white-space:nowrap;overflow:hidden;transition:background .15s,border-color .15s;
+}
+.cuenta[hidden]{display:none}
+.cuenta:hover{background:rgba(255,255,255,.08);border-color:#2b3647}
+.cuenta .pt{width:7px;height:7px;border-radius:50%;flex:0 0 7px;background:var(--c)}
+.cuenta .qu{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.cuenta .fa{font-weight:750;color:var(--u);flex-shrink:0}
+.cuenta .cu{color:var(--muted);flex-shrink:0}
+.cuenta .sep{color:#3a475b;flex-shrink:0}
+.cuenta.lejos{--u:var(--ac2)}
+.cuenta.pronto{--u:#fbbf24;border-color:rgba(251,191,36,.35)}
+.cuenta.ya{--u:var(--bad);border-color:rgba(248,113,113,.5);background:rgba(248,113,113,.08)}
+@media (max-width:720px){ .cuenta .cu,.cuenta .sep.s2{display:none} }
+@media (max-width:480px){ .cuenta .qu,.cuenta .sep.s1{display:none} }
 #frame{flex:1;width:100%;border:0;background:var(--bg)}
 </style>
 </head>
@@ -104,7 +128,11 @@ button.go:disabled{opacity:.55;cursor:progress}
 </div>
 
 <div id="app">
-  <div class="top"><span class="nm" id="docName">—</span></div>
+  <div class="top">
+    <span class="nm" id="docName">—</span>
+    <button class="cuenta" id="cuenta" type="button" hidden></button>
+    <span></span>
+  </div>
   <iframe id="frame" title="Documento"></iframe>
 </div>
 
@@ -199,6 +227,7 @@ async function reanudar(){
   gate.classList.add('off');
   app.classList.add('on');
   await mostrar(MANIFEST.docs[0].id);
+  iniciarCuenta();
   return true;
 }
 
@@ -235,6 +264,7 @@ async function desbloquear(){
   gate.classList.add('off');
   app.classList.add('on');
   await mostrar(MANIFEST.docs[0].id);
+  iniciarCuenta();
 }
 
 /* ---------- visor ---------- */
@@ -303,6 +333,129 @@ frame.addEventListener('load', () => {
     if(destino) mostrar(destino.id);
   }, true);
 });
+
+/* ---------- cuenta regresiva: funciones puras ----------
+   Los eventos viven en el dashboard, que está cifrado: se leen del documento
+   ya descifrado, así este archivo —que es público— no tiene ninguna fecha en
+   claro. El arreglo EVENTOS del dashboard es un literal de JS, y la política
+   de seguridad de esta página no permite eval, así que se pasa a JSON. */
+const TIPOS_CUENTA = ['defensa', 'parcial', 'segunda', 'entrega'];
+const MATERIA = {
+  tc:['Teoría', '#fb7185'], redes:['Redes', '#f5a524'], bd2:['BD2', '#2dd4bf'],
+  da1:['Diseño 1', '#8b7cf6'], gen:['General', '#5b93f0']
+};
+const DURA = 3 * 3600e3;            /* mientras dura el evento se muestra «es ahora» */
+const DIAS = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+
+/* El arreglo se delimita contando corchetes, saltando strings y comentarios:
+   el del dashboard cierra con "].sort(...)" y el archivo mezcla finales de
+   línea, así que buscar un "];" al principio de una línea no sirve. */
+function literalDe(html, nombre){
+  const i = html.search(new RegExp('const\\s+' + nombre + '\\s*=\\s*\\['));
+  if(i < 0) return null;
+  const ini = html.indexOf('[', i);
+  let prof = 0, q = null;
+  for(let j = ini; j < html.length; j++){
+    const c = html[j];
+    if(q){ if(c === '\\') j++; else if(c === q) q = null; continue; }
+    if(c === "'" || c === '"' || c === '`'){ q = c; continue; }
+    if(c === '/' && html[j + 1] === '*'){ j = html.indexOf('*/', j + 2) + 1; if(j <= 0) return null; continue; }
+    if(c === '/' && html[j + 1] === '/'){ j = html.indexOf('\n', j); if(j < 0) return null; continue; }
+    if(c === '[') prof++;
+    else if(c === ']' && --prof === 0) return html.slice(ini, j + 1);
+  }
+  return null;
+}
+
+function leerEventos(html){
+  const lit = literalDe(html, 'EVENTOS');
+  if(!lit) return [];
+  const strs = [];
+  let s = lit.replace(/'((?:[^'\\\n]|\\.)*)'/g, (_, c) => {
+    strs.push(c.replace(/\\(.)/g, '$1'));
+    return '\u0001' + (strs.length - 1) + '\u0001';
+  });
+  s = s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
+  s = s.replace(/([{,]\s*)([A-Za-z_$][\w$]*)\s*:/g, '$1"$2":');
+  s = s.replace(/,(\s*[}\]])/g, '$1');
+  s = s.replace(/\u0001(\d+)\u0001/g, (_, i) => JSON.stringify(strs[+i]));
+  return JSON.parse(s);
+}
+
+/* la hora sale del primer HH:MM del campo h: en «Noct. 18:30 · Mat. 14:00»
+   es la del nocturno, que es el grupo. Sin hora, vence al final del día. */
+function momento(ev){
+  const [y, mo, d] = ev.f.split('-').map(Number);
+  const hm = /(\d{1,2}):(\d{2})/.exec(ev.h || '');
+  return { fecha: hm ? new Date(y, mo - 1, d, +hm[1], +hm[2]) : new Date(y, mo - 1, d, 23, 59),
+           conHora: !!hm };
+}
+
+function proximoEvento(evs, ahora){
+  return evs.filter(e => TIPOS_CUENTA.includes(e.tipo))
+            .map(e => Object.assign({}, e, momento(e)))
+            .filter(e => e.fecha.getTime() + (e.conHora ? DURA : 0) > ahora.getTime())
+            .sort((a, b) => a.fecha - b.fecha)[0] || null;
+}
+
+function falta(ms){
+  if(ms <= 0) return 'es ahora';
+  const min = Math.ceil(ms / 60000), h = Math.floor(min / 60), d = Math.floor(h / 24);
+  const verbo = n => n === 1 ? 'falta ' : 'faltan ';
+  if(min < 60) return verbo(min) + min + (min === 1 ? ' minuto' : ' minutos');
+  if(h < 24)   return verbo(h) + h + ' h' + (min % 60 ? ' ' + (min % 60) + ' min' : '');
+  if(d < 3)    return verbo(d) + d + (d === 1 ? ' día' : ' días') + (h % 24 ? ' y ' + (h % 24) + ' h' : '');
+  return 'faltan ' + d + ' días';
+}
+
+function cuandoTexto(e, ahora){
+  const f = e.fecha, dos = n => String(n).padStart(2, '0');
+  const dia0 = x => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const dif = Math.round((dia0(f) - dia0(ahora)) / 864e5);
+  const dia = dif === 0 ? 'hoy' : dif === 1 ? 'mañana'
+            : DIAS[f.getDay()] + ' ' + dos(f.getDate()) + '/' + dos(f.getMonth() + 1);
+  return dia + (e.conHora ? ' ' + dos(f.getHours()) + ':' + dos(f.getMinutes()) : '');
+}
+
+const urgencia = ms => ms <= 864e5 ? 'ya' : ms <= 3 * 864e5 ? 'pronto' : 'lejos';
+
+function nombreCorto(e){
+  const base = e.t.split(' — ')[0];
+  return MATERIA[e.m] && e.m !== 'gen' ? base + ' · ' + MATERIA[e.m][0] : base;
+}
+/* ---------- fin de las funciones puras ---------- */
+
+const cuenta = $('#cuenta');
+let EVENTOS = [], relojCuenta = null;
+
+/* se arma con textContent: el texto sale de los datos y no se interpreta como HTML */
+function pintarCuenta(ahora){
+  ahora = ahora || new Date();
+  const e = proximoEvento(EVENTOS, ahora);
+  if(!e){ cuenta.hidden = true; return; }
+  const ms = e.fecha - ahora;
+  const pieza = (cls, txt) => { const s = document.createElement('span'); s.className = cls; s.textContent = txt; return s; };
+  cuenta.replaceChildren(
+    pieza('pt', ''), pieza('qu', nombreCorto(e)), pieza('sep s1', '·'),
+    pieza('fa', falta(ms)), pieza('sep s2', '·'), pieza('cu', cuandoTexto(e, ahora)));
+  cuenta.className = 'cuenta ' + urgencia(ms);
+  cuenta.style.setProperty('--c', (MATERIA[e.m] || MATERIA.gen)[1]);
+  cuenta.title = e.t + ' — ' + cuandoTexto(e, ahora) + (e.h ? ' (' + e.h + ')' : '')
+               + '. Tocá para abrir el calendario.';
+  cuenta.hidden = false;
+}
+
+async function iniciarCuenta(){
+  try {
+    if(MANIFEST.docs.some(x => x.id === 'dashboard')) EVENTOS = leerEventos(await cargar('dashboard'));
+  } catch(e){ EVENTOS = []; }
+  pintarCuenta();
+  if(!relojCuenta){
+    relojCuenta = setInterval(() => pintarCuenta(), 30000);
+    document.addEventListener('visibilitychange', () => { if(!document.hidden) pintarCuenta(); });
+  }
+}
+cuenta.addEventListener('click', () => { if(MANIFEST) mostrar('dashboard'); });
 
 /* ---------- eventos ---------- */
 go.addEventListener('click', desbloquear);
