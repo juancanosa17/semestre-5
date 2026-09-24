@@ -84,10 +84,15 @@ los cuatro primeros ejercicios, con el grafo de precedencia dibujado, la
 clasificación por recuperabilidad y el veredicto de 2PL en sus seis variantes,
 señalando el conflicto exacto que impide cada una. Lo acompañan un simulador de
 recuperación con checkpoint y falla, uno de candados de intención sobre la
-jerarquía, y calculadoras de propagación de privilegios, Bell-LaPadula y costos
-de acceso.
+jerarquía, un paso a paso que lleva un árbol canónico al plan lógico aplicando
+las heurísticas de a una, y calculadoras de propagación de privilegios,
+Bell-LaPadula y costos de acceso.
 
-Incluye **17 bloques con preguntas reales** resueltas y **33 de autoevaluación**,
+Los capítulos del primer parcial —integridad, seguridad y optimización de
+consultas— siguen los teóricos de la cátedra, con sus ejemplos y ejercicios
+resueltos.
+
+Incluye **17 bloques con preguntas reales** resueltas y **42 de autoevaluación**,
 sobre el análisis de **6 parciales** de 2024 y 2025.
 
 ### Resumen · Teoría de la Computación (6452)
