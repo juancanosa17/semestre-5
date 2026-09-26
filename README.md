@@ -92,7 +92,7 @@ Los capítulos del primer parcial —integridad, seguridad y optimización de
 consultas— siguen los teóricos de la cátedra, con sus ejemplos y ejercicios
 resueltos.
 
-Incluye **17 bloques con preguntas reales** resueltas y **43 de autoevaluación**,
+Incluye **17 bloques con preguntas reales** resueltas y **44 de autoevaluación**,
 sobre el análisis de **6 parciales** de 2024 y 2025.
 
 ### Resumen · Teoría de la Computación (6452)
