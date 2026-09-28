@@ -61,10 +61,10 @@ hacia abajo: qué es internet y el modelo de cinco capas, HTTP/1.1–2–3, DNS,
 correo, sockets, UDP y TCP, control de flujo y de congestión, ruteo, la capa de
 red y la de enlace.
 
-Incluye **19 herramientas interactivas** —entre ellas un simulador de
-resolución DNS, uno de ventana deslizante, una línea de tiempo de TCP,
+Incluye **20 herramientas interactivas** —entre ellas un simulador de
+resolución DNS, uno de rdt3.0 con los cuatro escenarios de stop-and-wait, uno de ventana deslizante, una línea de tiempo de TCP,
 calculadoras de CRC, checksum y subredes, y un mapa navegable de internet— más
-**122 preguntas de autoevaluación**.
+**124 preguntas de autoevaluación**.
 
 Sobre **52 parciales** de años anteriores se armó un análisis de frecuencia por
 tema y se intercalaron **67 preguntas reales** después de la sección que las
