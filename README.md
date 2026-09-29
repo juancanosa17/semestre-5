@@ -65,7 +65,9 @@ hacia abajo: qué es internet y el modelo de cinco capas, HTTP/1.1–2–3, DNS,
 correo, sockets, UDP y TCP, control de flujo y de congestión, ruteo, la capa de
 red y la de enlace.
 
-Incluye **21 herramientas interactivas** —entre ellas un simulador de
+Cada capítulo del 1 al 6 abre con un **mapa con zoom**: la capa entera en un solo dibujo, y cada parte marcada se abre acercando la cámara para mostrar lo que tiene adentro —el core de Internet, un router por dentro, el segmento TCP, Dijkstra, la trama Ethernet—, hasta cuatro o cinco niveles de profundidad y más de 100 escenas animadas.
+
+Incluye además **27 herramientas interactivas** —entre ellas un simulador de
 resolución DNS, uno de rdt3.0 con los cuatro escenarios de stop-and-wait, una comparación paso a paso de Go-Back-N y Selective Repeat, uno de ventana deslizante, una línea de tiempo de TCP,
 calculadoras de CRC, checksum y subredes, y un mapa navegable de internet— más
 **124 preguntas de autoevaluación**.
