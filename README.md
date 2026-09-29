@@ -35,9 +35,11 @@ tienen resumen propio y se abren desde la barra de navegación.
 
 ### Resumen · Diseño de Aplicaciones 1 (3924)
 
-Once capítulos que siguen el temario de la cátedra: paradigma de objetos y UML,
+Doce capítulos que siguen el temario de la cátedra: paradigma de objetos y UML,
 herencia y polimorfismo, Clean Code, TDD, refactoring, GRASP, **SOLID**,
-**patrones de diseño** y los diagramas de paquetes e interacción.
+**patrones de diseño**, los diagramas de paquetes e interacción y la
+**tecnología del práctico**: Git y GitFlow, arquitectura .NET, C#, excepciones,
+LINQ, Blazor y DTOs.
 
 El capítulo de POO y UML está armado sobre el teórico publicado; el resto, sobre
 el temario oficial —que fija tema por tema qué entra y de qué capítulo de qué
@@ -46,11 +48,13 @@ es cuál, porque el resumen se completa a medida que la cátedra publica materia
 
 Sus tres herramientas son clasificadores del ejercicio que más se repite:
 **qué relación UML** corresponde a un fragmento de código, **qué principio SOLID**
-viola un caso dado y **qué patrón** aplicar ante un problema concreto. Suma
-**8 preguntas reales resueltas** y **32 de autoevaluación**.
+viola un caso dado y **qué patrón** aplicar ante un problema concreto. A eso se
+suma un **GitFlow paso a paso** con los comandos de cada rama, y
+**17 preguntas reales resueltas** y **60 de autoevaluación**.
 
 Sobre **14 parciales** de 2021 a 2024 se armó el análisis de frecuencia: SOLID
-aparece en 13, patrones en 12 y UML de clases en 11. El parcial es de dos horas
+aparece en 13, patrones en 12, UML de clases en 11 y alguna pregunta de
+tecnología (.NET, Git, Blazor, LINQ o Entity Framework) en 13. El parcial es de dos horas
 y **sin material**.
 
 ### Resumen · Redes (3838)
