@@ -41,7 +41,11 @@ herencia y polimorfismo, Clean Code, TDD, refactoring, GRASP, **SOLID**,
 **tecnología del práctico**: Git y GitFlow, arquitectura .NET, C#, excepciones,
 LINQ, Blazor y DTOs.
 
-El capítulo de POO y UML está armado sobre el teórico publicado; el resto, sobre
+Los capítulos de POO y UML, TDD, **Clean Code** y **diagramas de secuencia** están
+armados sobre los teóricos publicados: Clean Code recorre los capítulos 1 a 8 del
+libro e incluye la actividad de refactoring resuelta, y el de secuencia explica cómo
+se lee el diagrama, sus fragmentos (opt, alt, loop, ref) y pasa el ejercicio de clase
+de código a diagrama, línea por línea. El resto, sobre
 el temario oficial —que fija tema por tema qué entra y de qué capítulo de qué
 libro— y sobre las preguntas que efectivamente cayeron. El capítulo 0 marca cuál
 es cuál, porque el resumen se completa a medida que la cátedra publica material.
