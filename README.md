@@ -35,9 +35,9 @@ tienen resumen propio y se abren desde la barra de navegación.
 
 ### Resumen · Diseño de Aplicaciones 1 (3924)
 
-Doce capítulos que siguen el temario de la cátedra: paradigma de objetos y UML,
-herencia y polimorfismo, Clean Code, TDD, refactoring, GRASP, **SOLID**,
-**patrones de diseño**, los diagramas de paquetes e interacción y la
+Doce capítulos en el orden en que se dan en clase: paradigma de objetos y UML,
+herencia y polimorfismo, TDD, Clean Code, refactoring, los diagramas de paquetes
+e interacción, GRASP, **SOLID**, **patrones de diseño** y la
 **tecnología del práctico**: Git y GitFlow, arquitectura .NET, C#, excepciones,
 LINQ, Blazor y DTOs.
 
