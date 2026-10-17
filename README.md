@@ -47,7 +47,7 @@ libro e incluye la actividad de refactoring resuelta, y el de secuencia explica 
 se lee el diagrama, sus fragmentos (opt, alt, loop, ref) y pasa el ejercicio de clase
 de código a diagrama, línea por línea. GRASP sigue el teórico a medida que avanza:
 responsabilidades, qué es un patrón, el ejemplo de facturación
-y los patrones Creador, Experto, Bajo acoplamiento y Alta cohesión. El resto, sobre
+y los cinco patrones básicos: Creador, Experto, Bajo acoplamiento, Alta cohesión y Controlador. El resto, sobre
 el temario oficial —que fija tema por tema qué entra y de qué capítulo de qué
 libro— y sobre las preguntas que efectivamente cayeron. El capítulo 0 marca cuál
 es cuál, porque el resumen se completa a medida que la cátedra publica material.
