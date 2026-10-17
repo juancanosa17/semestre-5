@@ -47,7 +47,7 @@ libro e incluye la actividad de refactoring resuelta, y el de secuencia explica 
 se lee el diagrama, sus fragmentos (opt, alt, loop, ref) y pasa el ejercicio de clase
 de código a diagrama, línea por línea. GRASP sigue el teórico completo:
 responsabilidades, qué es un patrón, el ejemplo de facturación, los nueve patrones
-con sus ejemplos y el esquema que los relaciona. El resto, sobre
+con sus ejemplos, el esquema que los relaciona y el ejercicio de reservas de hotel resuelto. El resto, sobre
 el temario oficial —que fija tema por tema qué entra y de qué capítulo de qué
 libro— y sobre las preguntas que efectivamente cayeron. El capítulo 0 marca cuál
 es cuál, porque el resumen se completa a medida que la cátedra publica material.
