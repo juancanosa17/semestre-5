@@ -117,7 +117,7 @@ operacional, teoría de conjuntos y numerabilidad, el lenguaje **χ**, el
 Sus **9 herramientas interactivas** incluyen un β-reductor real del cálculo
 lambda (con sustitución que evita captura de variables y las dos estrategias de
 evaluación), un simulador de máquinas de Turing programable, árboles de
-derivación de χ paso a paso, las deducciones de Imp del práctico 2 (NOT y AND,
+derivación de χ paso a paso, las deducciones de Imp del práctico 2 (NOT, AND y length con while,
 con la memoria final que baja hasta la raíz), el emparejamiento de Cantor y un
 clasificador de decidibilidad. Suma **96 preguntas de autoevaluación**.
 
