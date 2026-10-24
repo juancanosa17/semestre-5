@@ -114,11 +114,12 @@ operacional, teoría de conjuntos y numerabilidad, el lenguaje **χ**, el
 **cálculo lambda puro**, **Imp** y las **máquinas de Turing**, computabilidad
 —problema de la detención, reducciones, teorema de Rice— y complejidad P/NP.
 
-Sus **8 herramientas interactivas** incluyen un β-reductor real del cálculo
+Sus **9 herramientas interactivas** incluyen un β-reductor real del cálculo
 lambda (con sustitución que evita captura de variables y las dos estrategias de
 evaluación), un simulador de máquinas de Turing programable, árboles de
-derivación de χ paso a paso, el emparejamiento de Cantor y un clasificador de
-decidibilidad. Suma **96 preguntas de autoevaluación**.
+derivación de χ paso a paso, las deducciones de Imp del práctico 2 (NOT y AND,
+con la memoria final que baja hasta la raíz), el emparejamiento de Cantor y un
+clasificador de decidibilidad. Suma **96 preguntas de autoevaluación**.
 
 Incluye además el **Práctico 0** completo — el lenguaje de expresiones de
 conjuntos finitos de enteros, con su sintaxis abstracta, las nueve reglas de
