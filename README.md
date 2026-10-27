@@ -39,15 +39,22 @@ Doce capítulos en el orden en que se dan en clase: paradigma de objetos y UML,
 herencia y polimorfismo, TDD, Clean Code, refactoring, los diagramas de paquetes
 e interacción, GRASP, **SOLID**, **patrones de diseño** y la
 **tecnología del práctico**: Git y GitFlow, arquitectura .NET, C#, excepciones,
-LINQ, Blazor y DTOs.
+LINQ, Blazor, DTOs, SQL Server con Docker y **Entity Framework** —el contexto y
+sus estados, la carga de relacionadas, migraciones, Fluent API, el mapeo de
+herencias TPH, TPT y TPC, las pruebas con la base en memoria y el publish—.
 
-Los capítulos de POO y UML, TDD, **Clean Code** y **diagramas de secuencia** están
-armados sobre los teóricos publicados: Clean Code recorre los capítulos 1 a 8 del
-libro e incluye la actividad de refactoring resuelta, y el de secuencia explica cómo
-se lee el diagrama, sus fragmentos (opt, alt, loop, ref) y pasa el ejercicio de clase
-de código a diagrama, línea por línea. GRASP sigue el teórico completo:
-responsabilidades, qué es un patrón, el ejemplo de facturación, los nueve patrones
-con sus ejemplos, el esquema que los relaciona y el ejercicio de reservas de hotel resuelto. El resto, sobre
+Los capítulos de POO y UML, TDD, **Clean Code**, **diagramas de secuencia**, GRASP y
+**SOLID** están armados sobre los teóricos publicados: Clean Code recorre los
+capítulos 1 a 8 del libro e incluye la actividad de refactoring y la hoja de
+ejercicios resueltas, y el de secuencia explica cómo se lee el diagrama, sus
+fragmentos (opt, alt, loop, ref) y pasa el ejercicio de clase de código a diagrama,
+línea por línea. GRASP sigue el teórico completo —los nueve patrones con sus
+ejemplos, el esquema que los relaciona y el ejercicio del hotel— y resuelve los
+cuatro ejercicios de rediseño de la cátedra. SOLID sigue el teórico con sus
+ejemplos (Empleado y sus actores, el pingüino que no vuela, la interfaz partida
+por cliente, la interfaz que pertenece a la política) y su ejercicio de cierre.
+El de tecnología sigue las clases del práctico y los proyectos `MovieManager` que
+se muestran en ellas. El resto, sobre
 el temario oficial —que fija tema por tema qué entra y de qué capítulo de qué
 libro— y sobre las preguntas que efectivamente cayeron. El capítulo 0 marca cuál
 es cuál, porque el resumen se completa a medida que la cátedra publica material.
@@ -56,7 +63,7 @@ Sus tres herramientas son clasificadores del ejercicio que más se repite:
 **qué relación UML** corresponde a un fragmento de código, **qué principio SOLID**
 viola un caso dado y **qué patrón** aplicar ante un problema concreto. A eso se
 suma un **GitFlow paso a paso** con los comandos de cada rama, y
-**17 preguntas reales resueltas** y **60 de autoevaluación**.
+**17 preguntas reales resueltas** y **86 de autoevaluación**.
 
 Sobre **14 parciales** de 2021 a 2024 se armó el análisis de frecuencia: SOLID
 aparece en 13, patrones en 12, UML de clases en 11 y alguna pregunta de
