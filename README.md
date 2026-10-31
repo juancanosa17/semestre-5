@@ -43,6 +43,11 @@ LINQ, Blazor, DTOs, SQL Server con Docker y **Entity Framework** —el contexto 
 sus estados, la carga de relacionadas, migraciones, Fluent API, el mapeo de
 herencias TPH, TPT y TPC, las pruebas con la base en memoria y el publish—.
 
+Abre con el capítulo del **Obligatorio 1**: la letra ordenada y, ya entregado
+(v1.0.0, 8/10), su **cierre** —qué se entregó, quién hizo qué, el diagrama de
+dominio final, los pendientes que el equipo documentó y lo que quedó abierto en
+el repositorio de cara al Obligatorio 2—.
+
 Los capítulos de POO y UML, TDD, **Clean Code**, **diagramas de secuencia**, GRASP y
 **SOLID** están armados sobre los teóricos publicados: Clean Code recorre los
 capítulos 1 a 8 del libro e incluye la actividad de refactoring y la hoja de
