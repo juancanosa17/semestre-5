@@ -43,10 +43,14 @@ LINQ, Blazor, DTOs, SQL Server con Docker y **Entity Framework** —el contexto 
 sus estados, la carga de relacionadas, migraciones, Fluent API, el mapeo de
 herencias TPH, TPT y TPC, las pruebas con la base en memoria y el publish—.
 
-Abre con el capítulo del **Obligatorio 1**: la letra ordenada y, ya entregado
-(v1.0.0, 8/10), su **cierre** —qué se entregó, quién hizo qué, el diagrama de
-dominio final, los pendientes que el equipo documentó y lo que quedó abierto en
-el repositorio de cara al Obligatorio 2—.
+Abre con los dos obligatorios. El del **Obligatorio 2** (entrega 12/11) ordena la
+letra cruzada con lo ya entregado: punto de partida del repositorio, persistencia
+con EF Core sobre Azure SQL Edge, los siete requerimientos nuevos, cómo cambia el
+modelo, preguntas para el foro, el repositorio manual de cada integrante, el
+`AGENTS.md`, la documentación nueva, el video y un plan día a día. El del
+**Obligatorio 1** tiene la letra y, ya entregado (v1.0.0, 8/10), su **cierre**
+—qué se entregó, quién hizo qué, el diagrama de dominio final y los pendientes
+que el equipo documentó—.
 
 Los capítulos de POO y UML, TDD, **Clean Code**, **diagramas de secuencia**, GRASP y
 **SOLID** están armados sobre los teóricos publicados: Clean Code recorre los
