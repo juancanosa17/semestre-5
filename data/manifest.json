@@ -4,9 +4,9 @@
     "name": "PBKDF2",
     "hash": "SHA-256",
     "iter": 310000,
-    "salt": "uegtyidBOejX1gpJnn8PCQ=="
+    "salt": "/IYIaccXDS0/gAmHqFKsrA=="
   },
-  "verifier": "4ORjPnjnPDGr4XgD1EdmOX7r6Yc/V/rz63fJsDhzxspeFAOUPOM=",
+  "verifier": "fbYx1rlZLtVvnKTFFHiVVUg2m8AWgVx9YgXpDJNKDt9yaUHhP8k=",
   "docs": [
     {
       "id": "dashboard",
