@@ -1,0 +1,178 @@
+/* lector.css — distribución por tema y subrayado para los resúmenes.
+   El visor (index.html) la inyecta en cada resumen junto con lector.js.
+   Todo cuelga de html.lx, así que sin lector.js el resumen se ve como siempre. */
+
+html.lx{
+  --lx-bg:#f2f2f4; --lx-ink:#141318; --lx-ink2:#55535e; --lx-muted:#8e8c97; --lx-line:#e6e5ea;
+  --lx-peach:#fce3cf; --lx-peach-ink:#9c4e1c;
+  --lx-shadow:0 1px 2px rgb(20 19 24 / .03), 0 10px 30px -14px rgb(20 19 24 / .12);
+  scroll-padding-top:24px;
+  /* color de la materia (lo pone lector.js): pastel para fondos, tinta para texto y marcas.
+     Los capítulos quedan neutros a propósito: los cinco colores de categoría son de las cajas. */
+  --lx-c:#8b7cf6; --lx-tinta:color-mix(in srgb, var(--lx-c) 58%, #000);
+}
+html.lx body{background:var(--lx-bg);background-image:none}
+
+/* lo que reemplaza la distribución nueva */
+html.lx .top,
+html.lx .wrap>.toc{display:none}
+
+/* ---------- migas + buscador ---------- */
+.lx-migas{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:1600px;margin:0 auto;padding:22px 32px 0;font-size:14px}
+.lx-migas a,.lx-migas button.lx-mig{color:var(--lx-muted);font-weight:500;text-decoration:none;background:none;border:0;font:inherit;cursor:pointer;padding:0}
+.lx-migas a:hover,.lx-migas button.lx-mig:hover{color:var(--lx-ink);text-decoration:none}
+.lx-migas .lx-sep{color:var(--lx-muted);display:inline-grid}
+.lx-migas .lx-aqui{font-weight:500;color:var(--lx-ink)}
+.lx-buscar{margin-left:auto;display:flex;align-items:center;gap:10px;width:300px;height:44px;padding:0 10px 0 16px;
+  border-radius:16px;background:#fff;border:0;box-shadow:var(--lx-shadow);color:var(--lx-muted);font:inherit;font-size:14px;cursor:text;text-align:left}
+.lx-buscar span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lx-buscar kbd{font-family:var(--mono);font-size:10.5px;border:1px solid var(--lx-line);border-radius:6px;padding:1px 6px;color:var(--lx-muted)}
+.lx-temas-sel{display:none;margin-left:auto;max-width:100%;height:40px;border-radius:14px;border:0;background:#fff;box-shadow:var(--lx-shadow);
+  padding:0 12px;font:inherit;font-size:13.5px;color:var(--lx-ink)}
+
+/* ---------- grilla: tema + columna derecha ---------- */
+html.lx .wrap{grid-template-columns:minmax(0,1fr) 340px;gap:24px;max-width:1600px;padding:20px 32px 90px}
+html.lx main{display:block}
+html.lx .chap{display:none;margin:0}
+html.lx .chap.lx-on{display:flex;flex-direction:column;gap:24px}
+html.lx .leyenda{display:none}
+
+/* ---------- cabecera del tema ---------- */
+html.lx .chap-h{position:relative;overflow:hidden;margin:0;border:0;border-radius:32px;padding:36px;
+  background:
+    radial-gradient(900px 300px at 85% -20%, rgb(255 255 255 / .45), transparent 60%),
+    radial-gradient(600px 260px at 0% 110%, color-mix(in srgb, var(--lx-c) 14%, transparent), transparent 70%),
+    color-mix(in srgb, var(--lx-c) 20%, #fff)}
+html.lx .chap-h>.lbl{display:none}
+.lx-ceja{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.lx-ico{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#fff;color:var(--lx-tinta);flex-shrink:0}
+.lx-ico svg{width:20px;height:20px}
+.lx-eyebrow{margin-left:6px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--lx-tinta)}
+.lx-chip{font-size:12px;font-weight:500;padding:3px 10px;border-radius:999px;background:var(--lx-peach);color:var(--lx-peach-ink)}
+html.lx .chap-h h2{margin:22px 0 0;font-size:clamp(30px,3.6vw,46px);font-weight:400;line-height:1.08;letter-spacing:-.035em;color:var(--lx-ink)}
+.lx-recorrido{margin-top:22px;border-radius:18px;background:rgb(255 255 255 / .75);padding:16px 20px;font-size:14px;line-height:1.6;color:var(--lx-ink)}
+.lx-recorrido b{display:block;margin-bottom:5px;font-size:11.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--lx-muted)}
+html.lx .chap-h p{margin:20px 0 0;max-width:none;font-size:15px;line-height:1.7;color:var(--lx-ink2)}
+html.lx .chap-h p+p{margin-top:10px}
+html.lx .chap-h .roadmap{display:none}
+.lx-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.lx-pills>*{font:inherit;font-size:13px;padding:7px 15px;border-radius:999px;background:#fff;color:var(--lx-ink);border:0;cursor:default;text-decoration:none}
+.lx-pills button{cursor:pointer}
+.lx-pills button:hover{background:color-mix(in srgb, var(--lx-c) 12%, #fff)}
+.lx-pills .lx-oscuro{background:var(--lx-ink);color:#fff}
+.lx-pills .lx-oscuro:hover{background:#2a2930}
+
+/* ---------- cada subtema es una tarjeta ---------- */
+html.lx .chap .sub,
+html.lx .lx-suelto{margin:0;background:#fff;border-radius:28px;padding:28px;box-shadow:var(--lx-shadow);scroll-margin-top:20px}
+html.lx .sub>h3{display:flex;align-items:flex-start;gap:14px;border:0;padding:0;margin:0 0 18px;
+  font-size:21px;font-weight:450;line-height:1.3;letter-spacing:-.02em;color:var(--lx-ink)}
+html.lx .sub>h3 .hash{display:grid;place-items:center;min-width:42px;height:42px;padding:0 8px;border-radius:16px;margin-top:-6px;
+  background:color-mix(in srgb, var(--lx-c) 20%, #fff);color:var(--lx-tinta);
+  font-family:var(--sans);font-size:14px;font-weight:500;opacity:1;flex-shrink:0}
+html.lx .sub>h3 .done{margin-left:auto;margin-top:-2px;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--lx-line);font-size:13px}
+html.lx .sub>h3 .done:hover{border-color:var(--lx-tinta)}
+html.lx .sub>h3 .done.on{background:var(--lx-tinta);border-color:var(--lx-tinta);color:#fff}
+html.lx .sub.studied>h3{opacity:1}
+html.lx .sub.studied>h3 .lx-t{color:var(--lx-muted)}
+html.lx .sub.flash{animation:lx-fl 1.6s ease}
+@keyframes lx-fl{0%,25%{box-shadow:0 0 0 3px color-mix(in srgb, var(--lx-c) 45%, transparent), var(--lx-shadow)}100%{box-shadow:var(--lx-shadow)}}
+
+/* ---------- anterior / siguiente ---------- */
+.lx-nav{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lx-nav button{font:inherit;text-align:left;border:0;cursor:pointer;border-radius:24px;padding:20px;background:#fff;box-shadow:var(--lx-shadow);color:var(--lx-ink)}
+.lx-nav button small{display:block;font-size:12px;font-weight:500;color:var(--lx-muted)}
+.lx-nav button span{display:block;margin-top:4px;font-weight:500}
+.lx-nav .lx-sig{grid-column:2;text-align:right;box-shadow:none;background:color-mix(in srgb, var(--lx-c) 20%, #fff)}
+.lx-nav .lx-sig small{color:var(--lx-tinta)}
+
+/* ---------- columna derecha ---------- */
+.lx-aside{min-width:0}
+.lx-pegado{position:sticky;top:20px;display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - 40px);overflow-y:auto;
+  scrollbar-width:thin;padding-bottom:4px}
+.lx-card{background:#fff;border-radius:24px;padding:16px;box-shadow:var(--lx-shadow);flex-shrink:0}
+.lx-card-h{display:flex;align-items:center;gap:12px;padding:0 8px;margin-bottom:12px}
+.lx-card-h p{margin:0;font-size:15px;font-weight:500;color:var(--lx-ink)}
+.lx-card-h small{display:block;font-size:12.5px;color:var(--lx-muted)}
+.lx-card-h .lx-der{margin-left:auto}
+.lx-anillo{position:relative;width:46px;height:46px;flex-shrink:0}
+.lx-anillo svg{width:46px;height:46px;transform:rotate(-90deg)}
+.lx-anillo circle{fill:none;stroke-width:4}
+.lx-anillo span{position:absolute;inset:0;display:grid;place-items:center;font-size:11px;font-weight:500;color:var(--lx-ink)}
+.lx-lista{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.lx-lista li{margin:0}
+.lx-lista li::marker{content:none}
+.lx-item{display:flex;align-items:flex-start;gap:10px;border-radius:14px;padding:7px 8px;font-size:13.5px;line-height:1.4;color:var(--lx-ink2);cursor:pointer}
+.lx-item:hover{color:var(--lx-ink)}
+.lx-item.act{background:var(--lx-bg);color:var(--lx-ink);font-weight:500}
+.lx-item .lx-n{color:var(--lx-muted);font-weight:400}
+.lx-tilde{display:grid;place-items:center;width:20px;height:20px;margin-top:-1px;border-radius:50%;border:1px solid var(--lx-line);flex-shrink:0;
+  background:#fff;cursor:pointer;color:#fff;padding:0}
+.lx-tilde:hover{border-color:var(--lx-muted)}
+.lx-tilde svg{width:11px;height:11px;opacity:0}
+.lx-tilde.on{border-color:transparent;background:var(--lx-tinta)}
+.lx-tilde.on svg{opacity:1}
+.lx-prog{margin-left:auto;padding-left:8px;font-size:11.5px;color:var(--lx-muted);white-space:nowrap}
+.lx-vacio{margin:0;padding:4px 8px;font-size:14px;line-height:1.55;color:var(--lx-muted)}
+.lx-clases{display:flex;flex-wrap:wrap;gap:6px;padding:0 6px}
+html.lx .lx-clases a.clase{margin:0;font-size:12px;padding:3px 10px;background:var(--lx-bg);border-color:transparent;color:var(--lx-ink)}
+html.lx .lx-clases a.clase:hover{border-color:var(--lx-line);background:#fff}
+.lx-mas{font-size:12px;color:var(--lx-muted);background:none;border:0;cursor:pointer;padding:4px 6px;font:inherit}
+.lx-mas:hover{color:var(--lx-ink)}
+.lx-pie{display:flex;gap:12px;align-items:center;padding:8px 8px 0;font-size:12px;color:var(--lx-muted)}
+.lx-pie button{font:inherit;background:none;border:0;padding:0;color:var(--lx-muted);cursor:pointer}
+.lx-pie button:hover{color:var(--lx-ink);text-decoration:underline;text-underline-offset:4px}
+html.lx .lx-aside .leyenda{display:flex;margin:0;padding:0 6px;gap:6px}
+html.lx .lx-aside .leyenda i{font-size:9.5px;padding:3px 8px}
+
+/* ---------- subrayado ---------- */
+html.lx mark.lx-hl{color:inherit;border-radius:3px;padding:0;cursor:pointer;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+html.lx mark.lx-hl[data-c="amarillo"]{background:#fff0a3}
+html.lx mark.lx-hl[data-c="rosa"]{background:#ffd3e2}
+html.lx mark.lx-hl[data-c="verde"]{background:#d4f1c2}
+html.lx mark.lx-hl[data-c="celeste"]{background:#cfe6fb}
+html.lx mark.lx-hl[data-c="lila"]{background:#e2d9ff}
+html.lx mark.lx-hl.lx-pulso{animation:lx-pulso 1.4s ease}
+@keyframes lx-pulso{0%,40%{box-shadow:0 0 0 3px rgb(20 19 24 / .25)}100%{box-shadow:none}}
+.lx-barra{position:fixed;z-index:200;display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:999px;background:var(--lx-ink);
+  box-shadow:0 12px 32px -8px rgb(0 0 0 / .35);transform:translate(-50%,-100%)}
+.lx-barra.abajo{transform:translate(-50%,0)}
+.lx-barra button{border:0;cursor:pointer;padding:0;font:inherit}
+.lx-barra .lx-col{width:24px;height:24px;border-radius:50%;transition:transform .12s}
+.lx-barra .lx-col:hover{transform:scale(1.12)}
+.lx-barra .lx-col.on{box-shadow:0 0 0 2px var(--lx-ink),0 0 0 4px #fff}
+.lx-barra .lx-div{width:1px;height:20px;background:rgb(255 255 255 / .25);margin:0 2px}
+.lx-barra .lx-borrar{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:none;color:rgb(255 255 255 / .85)}
+.lx-barra .lx-borrar:hover{background:rgb(255 255 255 / .15);color:#fff}
+.lx-barra .lx-borrar svg{width:16px;height:16px}
+.lx-hls{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;max-height:30vh;overflow-y:auto}
+.lx-hls li{display:flex;align-items:flex-start;gap:4px;margin:0}
+.lx-hls li::marker{content:none}
+.lx-hls .lx-ir{flex:1;min-width:0;text-align:left;font:inherit;font-size:12.5px;line-height:1.45;color:var(--lx-ink2);background:none;border:0;border-radius:12px;
+  padding:6px 8px;cursor:pointer}
+.lx-hls .lx-ir:hover{background:var(--lx-bg)}
+.lx-hls .lx-ir span{border-radius:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lx-hls .lx-x{display:grid;place-items:center;width:24px;height:24px;margin-top:4px;border-radius:50%;border:0;background:none;color:var(--lx-muted);cursor:pointer;opacity:.6}
+.lx-hls li:hover .lx-x{opacity:1}
+.lx-hls .lx-x:hover{background:var(--lx-bg);color:var(--lx-ink)}
+.lx-hls .lx-x svg{width:13px;height:13px}
+.lx-ayuda{margin:8px 0 0;padding:0 8px;font-size:11.5px;line-height:1.5;color:var(--lx-muted)}
+
+/* ---------- pantallas angostas: una sola columna ---------- */
+@media (max-width:1080px){
+  html.lx .wrap{grid-template-columns:minmax(0,1fr);padding:16px 16px 70px;gap:24px}
+  .lx-migas{padding:16px 16px 0}
+  .lx-buscar{display:none}
+  .lx-temas-sel{display:block}
+  .lx-pegado{position:static;max-height:none;overflow:visible}
+}
+@media (max-width:640px){
+  html.lx .chap-h{border-radius:26px;padding:24px 20px}
+  html.lx .chap .sub,html.lx .lx-suelto{border-radius:22px;padding:20px 16px}
+  html.lx .sub>h3{font-size:18px;gap:10px}
+  html.lx .sub>h3 .hash{min-width:36px;height:36px;border-radius:13px;font-size:12.5px}
+  .lx-nav{grid-template-columns:1fr}
+  .lx-nav .lx-sig{grid-column:1}
+  .lx-migas .lx-ruta{flex-basis:100%}
+  .lx-temas-sel{margin-left:0;width:100%}
+}

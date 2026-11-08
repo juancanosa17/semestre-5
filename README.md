@@ -158,6 +158,7 @@ del curso.
 
 ```
 index.html          la página del sitio
+lector.css/.js      distribución por tema y subrayado de los resúmenes
 data/               los documentos publicados
 tools/lock.js       regenera data/ a partir de los HTML locales
 tools/sources.json  dónde están los originales en la máquina local
@@ -165,6 +166,21 @@ tools/sources.json  dónde están los originales en la máquina local
 
 Los HTML originales no viven acá: se editan por fuera y este repositorio
 publica el resultado.
+
+### Cómo se leen los resúmenes
+
+El visor inyecta `lector.css` y `lector.js` en cada resumen (no en el panel).
+Sin tocar los HTML originales, los reacomoda en **un tema por vez**: migas
+«Materias › Materia › Tema N», la cabecera del tema en una tarjeta con el color
+de la materia, cada subtema en su tarjeta y, a la derecha, **En este tema** con
+el progreso, la lista de temas, las clases citadas y los subrayados.
+
+Se puede **subrayar** en cinco colores: se selecciona texto de un subtema y se
+elige el color; tocando un subrayado se cambia el color o se borra. Los
+subrayados y el último tema abierto se guardan en el navegador
+(`localStorage`, claves `lector:<materia>:…`), igual que el progreso de estudio.
+Si se cambian `lector.css` o `lector.js`, subir `LECTOR_V` en `index.html`
+para que el navegador no use la versión vieja.
 
 ## Publicar cambios
 

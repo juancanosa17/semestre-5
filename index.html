@@ -283,7 +283,25 @@ async function mostrar(id){
   actual = id;
   $('#docName').textContent = d.title;
   document.title = d.title;
-  frame.srcdoc = await cargar(id);
+  frame.srcdoc = conLector(await cargar(id), d);
+}
+
+/* Los resúmenes se muestran con la distribución por tema y el subrayado de
+   lector.css y lector.js, que son públicos y no llevan contenido. Se inyectan
+   acá para no tocar los HTML originales: cualquier documento con capítulos
+   (.chap) los recibe; el panel del semestre no. */
+const LECTOR_V = '1';
+function conLector(html, d){
+  if(!/<section class="chap"/.test(html)) return html;
+  const attr = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  const materia = d.title.replace(/^Resumen\s*·\s*/, '');
+  const css = '<link rel="stylesheet" href="lector.css?v=' + LECTOR_V + '">';
+  const js  = '<script src="lector.js?v=' + LECTOR_V + '" data-doc="' + attr(d.id) + '" data-materia="' + attr(materia) + '"><' + '/script>';
+  const h = html.indexOf('</head>');
+  if(h >= 0) html = html.slice(0, h) + css + html.slice(h);
+  else html = css + html;
+  const b = html.lastIndexOf('</body>');
+  return b >= 0 ? html.slice(0, b) + js + html.slice(b) : html + js;
 }
 
 /* Los documentos se enlazan entre sí por nombre de archivo. Como acá viven
