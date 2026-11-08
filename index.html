@@ -290,7 +290,7 @@ async function mostrar(id){
    lector.css y lector.js, que son públicos y no llevan contenido. Se inyectan
    acá para no tocar los HTML originales: cualquier documento con capítulos
    (.chap) los recibe; el panel del semestre no. */
-const LECTOR_V = '1';
+const LECTOR_V = '2';
 function conLector(html, d){
   if(!/<section class="chap"/.test(html)) return html;
   const attr = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');

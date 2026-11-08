@@ -137,6 +137,8 @@ html.lx mark.lx-hl.lx-pulso{animation:lx-pulso 1.4s ease}
 .lx-barra{position:fixed;z-index:200;display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:999px;background:var(--lx-ink);
   box-shadow:0 12px 32px -8px rgb(0 0 0 / .35);transform:translate(-50%,-100%)}
 .lx-barra.abajo{transform:translate(-50%,0)}
+/* display:flex le gana al atributo hidden: sin esto la barra no se iba nunca */
+.lx-barra[hidden]{display:none}
 .lx-barra button{border:0;cursor:pointer;padding:0;font:inherit}
 .lx-barra .lx-col{width:24px;height:24px;border-radius:50%;transition:transform .12s}
 .lx-barra .lx-col:hover{transform:scale(1.12)}
