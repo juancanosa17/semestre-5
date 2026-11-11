@@ -137,14 +137,17 @@ del curso y las clases del 10 y el 11/11: notación asintótica O, Ω y Θ con l
 pizarrones, P, EXP y la jerarquía temporal, NP por certificado, reducciones
 polinomiales, NP-completitud y Cook-Levin, la hoja de problemas clásicos y las
 reducciones resueltas en clase (IS ≤p Clique, SAT ≤p 3-SAT, 3-SAT ≤p Clique y
-el Profesor Desorganizado desde k-Color).
+el Profesor Desorganizado desde k-Color). Cierra con el práctico **Reducciones
+NP-Completas** resuelto entero —de 3SAT ≤p SAT a VC ≤p SS y SS ≤p Partition, más
+el Puzzle del Transporte de Materiales del examen de setiembre 2025— y una ficha
+con todas las reducciones en una tabla.
 
 Sus **9 herramientas interactivas** incluyen un β-reductor real del cálculo
 lambda (con sustitución que evita captura de variables y las dos estrategias de
 evaluación), un simulador de máquinas de Turing programable, árboles de
 derivación de χ paso a paso, las deducciones de Imp del práctico 2 (NOT, AND y length con while,
 con la memoria final que baja hasta la raíz), el emparejamiento de Cantor y un
-clasificador de decidibilidad. Suma **109 preguntas de autoevaluación**.
+clasificador de decidibilidad. Suma **112 preguntas de autoevaluación**.
 
 Incluye además el **Práctico 0** completo — el lenguaje de expresiones de
 conjuntos finitos de enteros, con su sintaxis abstracta, las nueve reglas de
