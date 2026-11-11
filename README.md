@@ -128,14 +128,23 @@ sobre el análisis de **6 parciales** de 2024 y 2025.
 Diez capítulos que cubren el programa completo: recursión y semántica
 operacional, teoría de conjuntos y numerabilidad, el lenguaje **χ**, el
 **cálculo lambda puro**, **Imp** y las **máquinas de Turing**, computabilidad
-—problema de la detención, reducciones, teorema de Rice— y complejidad P/NP.
+—problema de la detención, reducciones, teorema de Rice— y complejidad.
+
+Las **máquinas de Turing** suman sus variantes (siempre escriben, multicabezal,
+bidimensional, multicinta, no determinista) y la máquina universal, con el
+cierre de la equivalencia de modelos. La **complejidad** sigue las diapositivas
+del curso y las clases del 10 y el 11/11: notación asintótica O, Ω y Θ con los
+pizarrones, P, EXP y la jerarquía temporal, NP por certificado, reducciones
+polinomiales, NP-completitud y Cook-Levin, la hoja de problemas clásicos y las
+reducciones resueltas en clase (IS ≤p Clique, SAT ≤p 3-SAT, 3-SAT ≤p Clique y
+el Profesor Desorganizado desde k-Color).
 
 Sus **9 herramientas interactivas** incluyen un β-reductor real del cálculo
 lambda (con sustitución que evita captura de variables y las dos estrategias de
 evaluación), un simulador de máquinas de Turing programable, árboles de
 derivación de χ paso a paso, las deducciones de Imp del práctico 2 (NOT, AND y length con while,
 con la memoria final que baja hasta la raíz), el emparejamiento de Cantor y un
-clasificador de decidibilidad. Suma **96 preguntas de autoevaluación**.
+clasificador de decidibilidad. Suma **109 preguntas de autoevaluación**.
 
 Incluye además el **Práctico 0** completo — el lenguaje de expresiones de
 conjuntos finitos de enteros, con su sintaxis abstracta, las nueve reglas de
@@ -145,12 +154,13 @@ derivación.
 
 El primer capítulo es una radiografía de **15 parciales** de 2019 a 2026: qué
 tema aparece en cada uno, los cinco ejercicios que se repiten y un plan de
-estudio derivado de eso. A lo largo del texto hay **17 bloques con preguntas
+estudio derivado de eso. A lo largo del texto hay **18 bloques con preguntas
 reales** y su resolución.
 
-Está armado sobre las notas de cátedra de **Diego Acuña**, los repartidos de
-**Á. Tasistro** y **E. Copello**, y el repositorio `TC_Marzo26` de la edición
-del curso.
+Está armado sobre las notas de cátedra y las diapositivas de **Diego Acuña**,
+los repartidos de **Á. Tasistro** y **E. Copello**, el repositorio `TC_Marzo26`
+de la edición del curso y las clases grabadas, con enlaces al minuto (Vimeo
+para el grupo de la noche, Panopto para el de la mañana).
 
 ---
 
