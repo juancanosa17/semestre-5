@@ -95,8 +95,11 @@ calculadoras de CRC, checksum y subredes, y un mapa navegable de internet— má
 **133 preguntas de autoevaluación**.
 
 Sobre **52 parciales** de años anteriores se armó un análisis de frecuencia por
-tema y se intercalaron **67 preguntas reales** después de la sección que las
-responde.
+tema, y para el Parcial 2 se sumaron **24 evaluaciones más** (segundos parciales,
+segundas instancias y exámenes de 2011 a 2026) con su propia radiografía. En
+total hay **178 preguntas reales** después de la sección que las responde, cada
+una con las fechas en que salió y su respuesta modelo; los ejercicios de VLSM,
+tablas de rutas, TCP y tramas en switches vienen resueltos completos.
 
 ### Resumen · Bases de Datos 2 (3839)
 
