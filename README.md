@@ -92,7 +92,7 @@ Cada capítulo del 1 al 6 abre con un **mapa con zoom**: la capa entera en un so
 Incluye además **27 herramientas interactivas** —entre ellas un simulador de
 resolución DNS, uno de rdt3.0 con los cuatro escenarios de stop-and-wait, una comparación paso a paso de Go-Back-N y Selective Repeat, uno de ventana deslizante, una línea de tiempo de TCP,
 calculadoras de CRC, checksum y subredes, y un mapa navegable de internet— más
-**124 preguntas de autoevaluación**.
+**133 preguntas de autoevaluación**.
 
 Sobre **52 parciales** de años anteriores se armó un análisis de frecuencia por
 tema y se intercalaron **67 preguntas reales** después de la sección que las
@@ -120,7 +120,7 @@ Los capítulos del primer parcial —integridad, seguridad y optimización de
 consultas— siguen los teóricos de la cátedra, con sus ejemplos y ejercicios
 resueltos.
 
-Incluye **17 bloques con preguntas reales** resueltas y **44 de autoevaluación**,
+Incluye **17 bloques con preguntas reales** resueltas y **48 de autoevaluación**,
 sobre el análisis de **6 parciales** de 2024 y 2025.
 
 ### Resumen · Teoría de la Computación (6452)
@@ -131,8 +131,11 @@ operacional, teoría de conjuntos y numerabilidad, el lenguaje **χ**, el
 —problema de la detención, reducciones, teorema de Rice— y complejidad.
 
 Las **máquinas de Turing** suman sus variantes (siempre escriben, multicabezal,
-bidimensional, multicinta, no determinista) y la máquina universal, con el
-cierre de la equivalencia de modelos. La **complejidad** sigue las diapositivas
+bidimensional, multicinta, no determinista, la MT con *Undo* y la cinta circular
+de la Defensa 3) y la máquina universal, con el cierre de la equivalencia de
+modelos y los **autómatas** de la última clase: AFD, AFN y ε-AFN, autómatas de
+pila, LBA, la jerarquía de Chomsky y qué terminación es decidible en cada modelo.
+La **complejidad** sigue las diapositivas
 del curso y las clases del 10 y el 11/11: notación asintótica O, Ω y Θ con los
 pizarrones, P, EXP y la jerarquía temporal, NP por certificado, reducciones
 polinomiales, NP-completitud y Cook-Levin, la hoja de problemas clásicos y las
@@ -147,7 +150,7 @@ lambda (con sustitución que evita captura de variables y las dos estrategias de
 evaluación), un simulador de máquinas de Turing programable, árboles de
 derivación de χ paso a paso, las deducciones de Imp del práctico 2 (NOT, AND y length con while,
 con la memoria final que baja hasta la raíz), el emparejamiento de Cantor y un
-clasificador de decidibilidad. Suma **112 preguntas de autoevaluación**.
+clasificador de decidibilidad. Suma **118 preguntas de autoevaluación**.
 
 Incluye además el **Práctico 0** completo — el lenguaje de expresiones de
 conjuntos finitos de enteros, con su sintaxis abstracta, las nueve reglas de
